@@ -12,12 +12,10 @@ function getAllTopics(){
 
 function renderTopics(topic) {
 const newsContainer = document.querySelector('#news-container')
-const newsRow = document.querySelector('#news-row')
 
 let newsDiv = document.createElement('div')
 newsDiv.classList.add('row')
-newsRow.appendChild(newsDiv)
-newsContainer.appendChild(newsRow)
+newsContainer.appendChild(newsDiv)
 
 let header1 = document.createElement('h3')
 header1.innerText = topic.title
