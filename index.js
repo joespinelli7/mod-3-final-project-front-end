@@ -23,16 +23,25 @@ newsDiv.classList.add('row')
 newsContainer.appendChild(newsDiv)
 
 let header1 = document.createElement('h3')
-header1.innerText = topic.title
+header1.innerHTML = `<strong>Title:</strong> ${topic.title}`
 
 let header2 = document.createElement('h4')
 header2.innerText = topic.description
 
 let header3 = document.createElement('h5')
-header3.innerText = topic.url
+// header3.innerText = topic.url
+let aTag = document.createElement('a')
+aTag.href = `${topic.url}`
+aTag.innerText = "Link to article here!"
+header3.appendChild(aTag)
 
 let header4 = document.createElement('h6')
-header4.innerText = topic.author
+// header4.innerText = topic.author
+if (topic.author === null) {
+  header4.innerHTML = `<br><br><br>`
+} else {
+header4.innerHTML = `<strong>Author:</strong> ${topic.author}<br><br><br>`
+}
 
 let image = document.createElement('img')
 image.src = topic.urlToImage
