@@ -44,8 +44,12 @@ header4.innerHTML = `<strong>Author:</strong> ${topic.author}<br><br><br>`
 }
 
 let image = document.createElement('img')
+if (topic.urlToImage === null){
+  image.innerHTML = `<br><br><br>`
+} else{
 image.src = topic.urlToImage
-
+image.classList.add('rounded')
+}
 
 
 newsDiv.appendChild(header1)
@@ -59,6 +63,10 @@ function searchNews(e) {
   e.preventDefault()
 
   let searchTerm = document.querySelector('#new-search').value
+  if(searchTerm === ""){
+    alert("Search for something!")
+  }
+  else{
 
   fetch(`https://newsapi.org/v2/everything?q=${searchTerm}&language=en&apiKey=c1787a15125449dca4ac46f1dd0b8a0f`)
   .then(res => res.json())
@@ -68,4 +76,4 @@ function searchNews(e) {
       renderTopic(article)
     })
   })
-}
+}}
