@@ -54,7 +54,7 @@ function loginForm(){
 
 
 function getAllTopics(){
-  fetch(`https://newsapi.org/v2/top-headlines?language=en&apiKey=c1787a15125449dca4ac46f1dd0b8a0f`)
+  fetch(`https://newsapi.org/v2/top-headlines?language=en&apiKey=${APIKEY}`)
   .then(res => res.json())
   .then(topics => {
     topics.articles.forEach( (topic) => {
