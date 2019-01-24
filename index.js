@@ -114,10 +114,12 @@ function renderTopic(topic) {
   //add box or highlight to it
   if (navBar.id !== "0"){
     let welcomeMessage = document.createElement('h1')
-    welcomeMessage.innerText = "Welcome User!"
+    welcomeMessage.id = "welcome"
+    grabUserName()
+    // welcomeMessage.innerText = `Welcome ${grabUserName()}!`
 
-    newsContainer.appendChild(welcomeMessage)
-  }
+    navBar.appendChild(welcomeMessage)}
+
 
   newsDiv.appendChild(header1)
   newsDiv.appendChild(image)
@@ -137,6 +139,16 @@ function renderTopic(topic) {
     newsDiv.appendChild(removeButton)
   }
 }
+
+function grabUserName(){
+  fetch('http://localhost:3000/users')
+  .then(res => res.json())
+  .then(users => {users.forEach((user) => {
+    if(parseInt(document.querySelector('nav').id) === user.id){
+      document.querySelector('#welcome').innerText = `Welcome ${user.name}`}
+}
+)
+})}
 
 function searchNews(e) {
   e.preventDefault()
