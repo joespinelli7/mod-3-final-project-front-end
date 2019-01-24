@@ -126,7 +126,7 @@ function renderTopic(topic) {
   newsDiv.appendChild(header4)
   newsContainer.appendChild(newsDiv)
 
-  if (navBar.id !== "0"){
+  if (navBar.id !== "hi"){
 
     let likeButton = document.createElement('button')
     likeButton.classList.add('like-button')
