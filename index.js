@@ -18,9 +18,26 @@ function loginForm(){
   let form = document.createElement('form')
   form.method = "POST"
   let input1 = document.createElement('input')
+  input1.id = "input-id"
   input1.placeholder = "E-mail"
   let btn = document.createElement('button')
   btn.innerText = "Login"
+  btn.addEventListener('click', (e) => {
+    e.preventDefault()
+    fetch('http://localhost:3000/users')
+    .then(res => res.json())
+    .then(users => {users.forEach( (user) =>
+      {
+        if (user.email === document.querySelector('#input-id').value){
+          document.querySelector('#news-container').innerHTML = ""
+          navbar.id = user.id
+          getAllTopics()
+        }
+      }
+
+    )
+  })
+  })
 
   const navbar = document.querySelector('nav')
   form.appendChild(input1)
@@ -28,10 +45,14 @@ function loginForm(){
   jumbo.appendChild(form)
   navbar.appendChild(jumbo)
 
-
 }
 
-
+// function checkValidUser(user){
+//   if (user.email !== document.querySelector('#input-id').value){
+//     alert('User not found')
+//   }
+//
+// }
 
 
 
@@ -50,6 +71,8 @@ let topicId = 0
 
 function renderTopic(topic) {
 const newsContainer = document.querySelector('#news-container')
+
+let navBar = document.querySelector('nav')
 
 let newsDiv = document.createElement('div')
 newsDiv.classList.add(`row-${++topicId}`)
@@ -71,9 +94,9 @@ header3.appendChild(aTag)
 let header4 = document.createElement('h6')
 
 if (topic.author === null) {
-  header4.innerHTML = `<br><br><br>`
+  header4.innerHTML = ''
 } else {
-header4.innerHTML = `<strong>Author:</strong> ${topic.author}<br><br><br>`
+header4.innerHTML = `<strong>Author:</strong> ${topic.author}`
 }
 
 let image = document.createElement('img')
@@ -85,6 +108,7 @@ image.classList.add('rounded')
 image.alt = "No Image Available"
 }
 
+let br = document.createElement('br')
 
 newsDiv.appendChild(header1)
 newsDiv.appendChild(image)
@@ -92,6 +116,22 @@ newsDiv.appendChild(header2)
 newsDiv.appendChild(header3)
 newsDiv.appendChild(header4)
 newsContainer.appendChild(newsDiv)
+if (navBar.id !== "0"){
+  // debugger
+  let likeButton = document.createElement('button')
+  likeButton.innerText = "Like"
+
+  let removeButton = document.createElement('button')
+  removeButton.innerText = "Remove"
+
+  newsDiv.appendChild(likeButton)
+  newsDiv.appendChild(removeButton)
+  newsDiv.appendChild(br)
+  newsDiv.appendChild(br)
+  newsDiv.appendChild(br)
+}
+
+
 
 }
 
