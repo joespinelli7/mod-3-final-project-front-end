@@ -131,10 +131,12 @@ function renderTopic(topic) {
     let likeButton = document.createElement('button')
     likeButton.classList.add('like-button')
     likeButton.innerText = "Like 👍"
+    likeButton.addEventListener('click', saveArticle)
 
     let removeButton = document.createElement('button')
     removeButton.classList.add('remove-button')
     removeButton.innerText = "Remove 👎"
+    removeButton.addEventListener('click', removeMainNewsArticle)
 
     newsDiv.appendChild(likeButton)
     newsDiv.appendChild(removeButton)
@@ -146,6 +148,42 @@ function logout(){
   logoutButton.addEventListener('click', () => {
     logoutButton.innerText = "Login"
   })
+}
+
+
+// topic1 = Topic.create!(author: , title: , description: , published_at: ,
+//   source_id: , source_name: , url: , urlToImage: , user_id: )
+
+function saveArticle(e){
+  const author = e.target.parentNode.childNodes[4].innerText
+  const title = e.target.parentNode.childNodes[0].innerText
+  const description = e.target.parentNode.childNodes[2].innerText
+  const urlToImage = e.target.parentNode.childNodes[1].src
+  const url = e.target.parentNode.childNodes[3].firstChild.href
+  let navBar = document.querySelector('nav')
+  let navBarId = parseInt(navBar.id)
+  let parentNode = e.target.parentNode
+  // debugger
+  fetch(`http://localhost:3000/users/${navBarId}`,{
+    method: "PATCH",
+    body: JSON.stringify({
+      user: {
+        url: url,
+        author: author,
+        title: title,
+        description: description,
+        urlToImage: urlToImage
+      }}),
+    headers:{
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
+  })
+}
+
+function removeMainNewsArticle(e){
+  let parentNode = e.target.parentNode
+  parentNode.remove()
 }
 
 function grabUserName(){
