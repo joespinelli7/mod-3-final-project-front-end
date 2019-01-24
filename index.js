@@ -70,69 +70,72 @@ function getAllTopics(){
 let topicId = 0
 
 function renderTopic(topic) {
-const newsContainer = document.querySelector('#news-container')
+  const newsContainer = document.querySelector('#news-container')
 
-let navBar = document.querySelector('nav')
+  let navBar = document.querySelector('nav')
 
-let newsDiv = document.createElement('div')
-newsDiv.classList.add(`row-${++topicId}`)
+  let newsDiv = document.createElement('div')
+  newsDiv.classList.add(`row-${++topicId}`)
 
-let header1 = document.createElement('h3')
-header1.innerHTML = `<strong>Title:</strong> ${topic.title}`
+  let header1 = document.createElement('h3')
+  header1.innerHTML = `<strong>Title:</strong> ${topic.title}`
 
-let header2 = document.createElement('h4')
-header2.innerText = topic.description
+  let header2 = document.createElement('h4')
+  header2.innerText = topic.description
 
-let header3 = document.createElement('h5')
-// header3.innerText = topic.url
+  let header3 = document.createElement('h5')
+  // header3.innerText = topic.url
 
-let aTag = document.createElement('a')
-aTag.href = `${topic.url}`
-aTag.innerText = "Link to article here!"
-header3.appendChild(aTag)
+  let aTag = document.createElement('a')
+  aTag.href = `${topic.url}`
+  aTag.innerText = "Link to article here!"
+  header3.appendChild(aTag)
 
-let header4 = document.createElement('h6')
+  let header4 = document.createElement('h6')
 
-if (topic.author === null) {
-  header4.innerHTML = ''
-} else {
-header4.innerHTML = `<strong>Author:</strong> ${topic.author}`
-}
+  if (topic.author === null) {
+    header4.innerHTML = ''
+  } else {
+    header4.innerHTML = `<strong>Author:</strong> ${topic.author}`
+  }
 
-let image = document.createElement('img')
-if (topic.urlToImage === null){
-  image.innerHTML = `<br><br><br>`
-} else{
-image.src = topic.urlToImage
-image.classList.add('rounded')
-image.alt = "No Image Available"
-}
+  let image = document.createElement('img')
+  if (topic.urlToImage === null){
+    image.innerHTML = `<br><br><br>`
+  } else {
+    image.src = topic.urlToImage
+    image.classList.add('rounded')
+    image.alt = "No Image Available"
+  }
 
-let br = document.createElement('br')
+  let br = document.createElement('br')
 
-newsDiv.appendChild(header1)
-newsDiv.appendChild(image)
-newsDiv.appendChild(header2)
-newsDiv.appendChild(header3)
-newsDiv.appendChild(header4)
-newsContainer.appendChild(newsDiv)
-if (navBar.id !== "0"){
-  // debugger
-  let likeButton = document.createElement('button')
-  likeButton.innerText = "Like"
+  //welcomes user when they sign in
+  //add box or highlight to it
+  if (navBar.id !== "0"){
+    let welcomeMessage = document.createElement('h1')
+    welcomeMessage.innerText = "Welcome User!"
 
-  let removeButton = document.createElement('button')
-  removeButton.innerText = "Remove"
+    newsContainer.appendChild(welcomeMessage)
+  }
 
-  newsDiv.appendChild(likeButton)
-  newsDiv.appendChild(removeButton)
-  newsDiv.appendChild(br)
-  newsDiv.appendChild(br)
-  newsDiv.appendChild(br)
-}
+  newsDiv.appendChild(header1)
+  newsDiv.appendChild(image)
+  newsDiv.appendChild(header2)
+  newsDiv.appendChild(header3)
+  newsDiv.appendChild(header4)
+  newsContainer.appendChild(newsDiv)
 
+  if (navBar.id !== "0"){
+    let likeButton = document.createElement('button')
+    likeButton.innerText = "Like"
 
+    let removeButton = document.createElement('button')
+    removeButton.innerText = "Remove"
 
+    newsDiv.appendChild(likeButton)
+    newsDiv.appendChild(removeButton)
+  }
 }
 
 function searchNews(e) {
