@@ -5,7 +5,6 @@ btn.innerText = "Login"
 function init(){
   getAllTopics()
   loginForm()
-  myFavorites()
   logout()
 
 
@@ -37,6 +36,7 @@ function loginForm(){
           document.querySelector('#news-container').innerHTML = ""
           navbar.id = user.id
           getAllTopics()
+          myFavorites()
         }
       }
 
@@ -202,9 +202,14 @@ function myFavorites(){
 
     let myFavorites = document.createElement('button')
     myFavorites.innerText = "My Favorites"
+    myFavorites.addEventListener('click', showFavorites)
     navBar.appendChild(myFavorites)
   }
+}
 
+function showFavorites(){
+  document.reset()
+  console.log('hello')
 }
 
 function searchNews(e) {
