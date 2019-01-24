@@ -164,15 +164,16 @@ function saveArticle(e){
   let navBarId = parseInt(navBar.id)
   let parentNode = e.target.parentNode
   // debugger
-  fetch(`http://localhost:3000/users/${navBarId}`,{
-    method: "PATCH",
+  fetch(`http://localhost:3000/topics/`,{
+    method: "POST",
     body: JSON.stringify({
-      user: {
+      topic: {
+        user_id: navBarId,
         url: url,
         author: author,
         title: title,
         description: description,
-        urlToImage: urlToImage
+        url_to_image: urlToImage
       }}),
     headers:{
       'Content-Type': 'application/json',
@@ -208,8 +209,12 @@ function myFavorites(){
 }
 
 function showFavorites(){
-  document.reset()
-  console.log('hello')
+  console.log('beginning')
+  let navBarId = document.querySelector('nav').id
+  fetch(`http://localhost:3000/users/${navBarId}/favorites`)
+  .then(res => res.json())
+  .then(data => console.log(data))
+  document.getElementById('news-container').innerHTML = ""
 }
 
 function searchNews(e) {
