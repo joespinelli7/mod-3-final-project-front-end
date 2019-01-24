@@ -9,3 +9,12 @@ body {
   width: 600px;
   height: 400px;
 }
+
+.like-button {
+      margin-bottom: 34px;
+      margin-right: 10px;
+}
+
+.remove-button {
+    margin-bottom: 34px;
+}

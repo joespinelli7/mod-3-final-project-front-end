@@ -1,15 +1,19 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', init)
+
+const btn = document.createElement('button')
+btn.innerText = "Login"
+function init(){
   getAllTopics()
   loginForm()
+  myFavorites()
+  logout()
 
 
 
   let searchForm = document.querySelector('#new-search-form')
   searchForm.addEventListener('submit', searchNews)
-})
+}
 
-const btn = document.createElement('button')
-btn.innerText = "Login"
 
 function loginForm(){
   let jumbo = document.createElement('div')
@@ -21,6 +25,7 @@ function loginForm(){
   input1.id = "input-id"
   input1.placeholder = "E-mail"
   let btn = document.createElement('button')
+  btn.id = `input-btn`
   btn.innerText = "Login"
   btn.addEventListener('click', (e) => {
     e.preventDefault()
@@ -46,16 +51,6 @@ function loginForm(){
   navbar.appendChild(jumbo)
 
 }
-
-// function checkValidUser(user){
-//   if (user.email !== document.querySelector('#input-id').value){
-//     alert('User not found')
-//   }
-//
-// }
-
-
-
 
 
 function getAllTopics(){
@@ -115,10 +110,13 @@ function renderTopic(topic) {
   if (navBar.id !== "0"){
     let welcomeMessage = document.createElement('h1')
     welcomeMessage.id = "welcome"
-    grabUserName()
-    // welcomeMessage.innerText = `Welcome ${grabUserName()}!`
 
-    navBar.appendChild(welcomeMessage)}
+
+    grabUserName()
+    // document.querySelector('#input-id').reset()
+    document.querySelector('#input-btn').innerText = "Logout"
+    navBar.appendChild(welcomeMessage)
+    }
 
 
   newsDiv.appendChild(header1)
@@ -129,15 +127,25 @@ function renderTopic(topic) {
   newsContainer.appendChild(newsDiv)
 
   if (navBar.id !== "0"){
+
     let likeButton = document.createElement('button')
-    likeButton.innerText = "Like"
+    likeButton.classList.add('like-button')
+    likeButton.innerText = "Like 👍"
 
     let removeButton = document.createElement('button')
-    removeButton.innerText = "Remove"
+    removeButton.classList.add('remove-button')
+    removeButton.innerText = "Remove 👎"
 
     newsDiv.appendChild(likeButton)
     newsDiv.appendChild(removeButton)
   }
+}
+
+function logout(){
+  let logoutButton = document.getElementById('input-btn')
+  logoutButton.addEventListener('click', () => {
+    logoutButton.innerText = "Login"
+  })
 }
 
 function grabUserName(){
@@ -149,6 +157,17 @@ function grabUserName(){
 }
 )
 })}
+// Need to figure this myFavorites function out, not exactly working
+function myFavorites(){
+  let navBar = document.querySelector('nav')
+  if (navBar.id !== "hi"){
+
+    let myFavorites = document.createElement('button')
+    myFavorites.innerText = "My Favorites"
+    navBar.appendChild(myFavorites)
+  }
+
+}
 
 function searchNews(e) {
   e.preventDefault()
