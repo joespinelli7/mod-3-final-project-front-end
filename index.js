@@ -216,7 +216,7 @@ function searchNews(e) {
   }
   else{
 
-  fetch(`https://newsapi.org/v2/everything?q=${searchTerm}&language=en&apiKey=c1787a15125449dca4ac46f1dd0b8a0f`)
+  fetch(`https://newsapi.org/v2/everything?q=${searchTerm}&language=en&apiKey=${APIKEY}`)
   .then(res => res.json())
   .then(data => {
     document.querySelector('#news-container').innerHTML = ""
