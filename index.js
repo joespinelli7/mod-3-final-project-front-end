@@ -158,6 +158,7 @@ function logout(){
 //   source_id: , source_name: , url: , urlToImage: , user_id: )
 
 function saveArticle(e){
+  debugger
   const author = e.target.parentNode.childNodes[4].innerText
   const title = e.target.parentNode.childNodes[0].innerText
   const description = e.target.parentNode.childNodes[2].innerText
@@ -176,7 +177,7 @@ function saveArticle(e){
         author: author,
         title: title,
         description: description,
-        url_to_image: urlToImage
+        urlToImage: urlToImage
       }}),
     headers:{
       'Content-Type': 'application/json',
@@ -213,11 +214,88 @@ function myFavorites(){
 
 function showFavorites(){
   console.log('beginning')
+  document.getElementById('news-container').innerHTML = ""
   let navBarId = document.querySelector('nav').id
   fetch(`http://localhost:3000/users/${navBarId}/favorites`)
   .then(res => res.json())
-  .then(data => console.log(data))
-  document.getElementById('news-container').innerHTML = ""
+  .then(data =>
+    {data.forEach( (topic) => {
+    // renderFavorites(topic)
+    console.log(topic)
+  })
+})
+}
+
+function renderFavorites(topic){
+  const newsContainer = document.querySelector('#news-container')
+
+  let navBar = document.querySelector('nav')
+
+  let newsDiv = document.createElement('div')
+  newsDiv.classList.add(`row-${++topicId}`)
+
+  let header1 = document.createElement('h3')
+  header1.innerHTML = `<strong>Title:</strong> ${topic.title}`
+
+  let header2 = document.createElement('h4')
+  header2.innerText = topic.description
+
+  let header3 = document.createElement('h5')
+  // header3.innerText = topic.url
+
+  let aTag = document.createElement('a')
+  let newWindow = document.createAttribute("target")
+  newWindow.value = "_blank"
+  aTag.href = `${topic.url}`
+  aTag.innerText = "Link to article here!"
+  aTag.setAttributeNode(newWindow)
+  header3.appendChild(aTag)
+
+  let header4 = document.createElement('h6')
+
+  if (topic.author === null) {
+    header4.innerHTML = ''
+  } else {
+    header4.innerHTML = `<strong>Author:</strong> ${topic.author}`
+  }
+
+  let image = document.createElement('img')
+  if (topic.url_to_image === null){
+    image.innerHTML = `<br><br><br>`
+  } else {
+
+    image.src = topic.urlToImage
+    image.classList.add('rounded')
+    image.alt = "No Image Available"
+  }
+  if (navBar.id !== "hi"){
+    let welcomeMessage = document.createElement('h1')
+    welcomeMessage.id = "welcome"
+
+
+    grabUserName()
+    // document.querySelector('#input-id').reset()
+    document.querySelector('#input-btn').innerText = "Logout"
+    navBar.appendChild(welcomeMessage)
+    }
+
+
+  newsDiv.appendChild(header1)
+  newsDiv.appendChild(image)
+  newsDiv.appendChild(header2)
+  newsDiv.appendChild(header3)
+  newsDiv.appendChild(header4)
+  newsContainer.appendChild(newsDiv)
+
+  if (navBar.id !== "hi"){
+
+    let removeButton = document.createElement('button')
+    removeButton.classList.add('remove-button')
+    removeButton.innerText = "Destroy 🧨"
+    removeButton.addEventListener('click', removeMainNewsArticle)
+
+    newsDiv.appendChild(removeButton)
+  }
 }
 
 function searchNews(e) {
