@@ -5,7 +5,7 @@ btn.innerText = "Login"
 function init(){
   getAllTopics()
   loginForm()
-  logout()
+  // logout()
 
 
 
@@ -19,7 +19,6 @@ function loginForm(){
   jumbo.classList.add('jumbotron')
 
   let form = document.createElement('form')
-  form.method = "POST"
   let input1 = document.createElement('input')
   input1.id = "input-id"
   input1.placeholder = "E-mail"
@@ -141,6 +140,9 @@ function renderTopic(topic) {
     removeButton.innerText = "Remove 👎"
     removeButton.addEventListener('click', removeMainNewsArticle)
 
+    let logoutButton = document.getElementById('input-btn')
+  logoutButton.innerText = "Logout"
+
     newsDiv.appendChild(likeButton)
     newsDiv.appendChild(removeButton)
   }
@@ -162,7 +164,7 @@ function saveArticle(e){
   const author = e.target.parentNode.childNodes[4].innerText
   const title = e.target.parentNode.childNodes[0].innerText
   const description = e.target.parentNode.childNodes[2].innerText
-  const url_to_image = e.target.parentNode.childNodes[1].src
+  const urlToImage = e.target.parentNode.childNodes[1].src
   const url = e.target.parentNode.childNodes[3].firstChild.href
   let navBar = document.querySelector('nav')
   let navBarId = parseInt(navBar.id)
@@ -177,7 +179,7 @@ function saveArticle(e){
         author: author,
         title: title,
         description: description,
-        url_to_image: url_to_image
+        urlToImage: urlToImage
       }}),
     headers:{
       'Content-Type': 'application/json',
@@ -240,7 +242,6 @@ function renderFavorites(topic){
   header2.innerText = topic.description
 
   let header3 = document.createElement('h5')
-  // header3.innerText = topic.url
 
   let aTag = document.createElement('a')
   let newWindow = document.createAttribute("target")
@@ -259,11 +260,10 @@ function renderFavorites(topic){
   }
 
   let image = document.createElement('img')
-  if (topic.urlToImage === null){
+  if (topic.url_to_image === null){
     image.innerHTML = `<br><br><br>`
   } else {
-
-    image.src = topic.urlToImage
+    image.src = topic.url_to_image
     image.classList.add('rounded')
     image.alt = "No Image Available"
   }
