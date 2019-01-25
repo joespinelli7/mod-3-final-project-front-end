@@ -82,8 +82,11 @@ function renderTopic(topic) {
   // header3.innerText = topic.url
 
   let aTag = document.createElement('a')
+  let newWindow = document.createAttribute("target")
+  newWindow.value = "_blank"
   aTag.href = `${topic.url}`
   aTag.innerText = "Link to article here!"
+  aTag.setAttributeNode(newWindow)
   header3.appendChild(aTag)
 
   let header4 = document.createElement('h6')
