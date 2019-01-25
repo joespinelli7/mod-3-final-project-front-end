@@ -160,7 +160,6 @@ function logout(){
 //   source_id: , source_name: , url: , urlToImage: , user_id: )
 
 function saveArticle(e){
-  debugger
   const author = e.target.parentNode.childNodes[4].innerText
   const title = e.target.parentNode.childNodes[0].innerText
   const description = e.target.parentNode.childNodes[2].innerText
@@ -291,20 +290,18 @@ function renderFavorites(topic){
     let removeButton = document.createElement('button')
     removeButton.classList.add('remove-button')
     removeButton.innerText = "Destroy 🧨"
-    removeButton.addEventListener('click', removeFavNewsArticle)
+    removeButton.addEventListener('click', ()=> {removeFavNewsArticle(topic.url, topic.id)})
 
     newsDiv.appendChild(removeButton)
   }
 }
 
-function removeFavNewsArticle(e){
+function removeFavNewsArticle(url,id){
   let navBarId = document.querySelector('nav').id
-  fetch(`http://localhost:3000/users/${navBarId}/favorites`,{
+
+  fetch(`http://localhost:3000/users/${navBarId}/favorites/${id}`,{
     method: "DELETE"
-  }).then(res => res.json())
-  .then(data => { debugger
-    // document.querySelector(`#card-${id}`).remove()
-  })
+  }).then(showFavorites)
 }
 
 function searchNews(e) {
