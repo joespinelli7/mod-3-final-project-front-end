@@ -117,7 +117,7 @@ function renderTopic(topic) {
 
     grabUserName()
     // document.querySelector('#input-id').reset()
-    document.querySelector('#input-btn').innerText = "Logout"
+    document.querySelector('#input-btn').innerText = "Login"
     navBar.appendChild(welcomeMessage)
     }
 
@@ -162,7 +162,7 @@ function saveArticle(e){
   const author = e.target.parentNode.childNodes[4].innerText
   const title = e.target.parentNode.childNodes[0].innerText
   const description = e.target.parentNode.childNodes[2].innerText
-  const urlToImage = e.target.parentNode.childNodes[1].src
+  const url_to_image = e.target.parentNode.childNodes[1].src
   const url = e.target.parentNode.childNodes[3].firstChild.href
   let navBar = document.querySelector('nav')
   let navBarId = parseInt(navBar.id)
@@ -177,7 +177,7 @@ function saveArticle(e){
         author: author,
         title: title,
         description: description,
-        urlToImage: urlToImage
+        url_to_image: url_to_image
       }}),
     headers:{
       'Content-Type': 'application/json',
@@ -205,23 +205,22 @@ function myFavorites(){
   let navBar = document.querySelector('nav')
   if (navBar.id !== "hi"){
 
+    if(!navBar.myFavorites){
     let myFavorites = document.createElement('button')
     myFavorites.innerText = "My Favorites"
     myFavorites.addEventListener('click', showFavorites)
-    navBar.appendChild(myFavorites)
+    navBar.appendChild(myFavorites)}
   }
 }
 
 function showFavorites(){
-  console.log('beginning')
   document.getElementById('news-container').innerHTML = ""
   let navBarId = document.querySelector('nav').id
   fetch(`http://localhost:3000/users/${navBarId}/favorites`)
   .then(res => res.json())
   .then(data =>
     {data.forEach( (topic) => {
-    // renderFavorites(topic)
-    console.log(topic)
+    renderFavorites(topic)
   })
 })
 }
@@ -260,7 +259,7 @@ function renderFavorites(topic){
   }
 
   let image = document.createElement('img')
-  if (topic.url_to_image === null){
+  if (topic.urlToImage === null){
     image.innerHTML = `<br><br><br>`
   } else {
 
@@ -292,10 +291,20 @@ function renderFavorites(topic){
     let removeButton = document.createElement('button')
     removeButton.classList.add('remove-button')
     removeButton.innerText = "Destroy 🧨"
-    removeButton.addEventListener('click', removeMainNewsArticle)
+    removeButton.addEventListener('click', removeFavNewsArticle)
 
     newsDiv.appendChild(removeButton)
   }
+}
+
+function removeFavNewsArticle(e){
+  let navBarId = document.querySelector('nav').id
+  fetch(`http://localhost:3000/users/${navBarId}/favorites`,{
+    method: "DELETE"
+  }).then(res => res.json())
+  .then(data => { debugger
+    // document.querySelector(`#card-${id}`).remove()
+  })
 }
 
 function searchNews(e) {
