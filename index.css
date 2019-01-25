@@ -18,3 +18,7 @@ body {
 .remove-button {
     margin-bottom: 34px;
 }
+
+.margin-btn {
+  margin: 13px;
+}

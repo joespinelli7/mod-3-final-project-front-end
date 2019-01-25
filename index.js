@@ -6,11 +6,50 @@ function init(){
   getAllTopics()
   loginForm()
   // logout()
-
+  showCategories()
 
 
   let searchForm = document.querySelector('#new-search-form')
   searchForm.addEventListener('submit', searchNews)
+}
+
+function showCategories() {
+  let div = document.querySelector('#mydiv')
+
+  let sportsBtn = document.createElement('button')
+  sportsBtn.classList.add('margin-btn')
+  sportsBtn.innerText = "Sports 🏈"
+  div.appendChild(sportsBtn)
+  // sportsBtn.addEventListener('click', () => {
+  //   fetch(`https://newsapi.org/v2/everything?q=sports&apiKey=${APIKEY}`)
+  //   .then(res => res.json())
+  //   .then(data => {
+  //     data.articles.forEach( (topic) => {
+  //       // debugger
+  //     // renderTopic(topic)
+  //     })
+  //   })
+  // })
+
+  let entertainmentBtn = document.createElement('button')
+  entertainmentBtn.classList.add('margin-btn')
+  entertainmentBtn.innerText = "Entertainment 🎥"
+  div.appendChild(entertainmentBtn)
+
+  let politicsBtn = document.createElement('button')
+  politicsBtn.classList.add('margin-btn')
+  politicsBtn.innerText = "Politics 🎺"
+  div.appendChild(politicsBtn)
+
+  let worldBtn = document.createElement('button')
+  worldBtn.classList.add('margin-btn')
+  worldBtn.innerText = "World 🌎"
+  div.appendChild(worldBtn)
+
+  let businessBtn = document.createElement('button')
+  businessBtn.classList.add('margin-btn')
+  businessBtn.innerText = "Business 💸"
+  div.appendChild(businessBtn)
 }
 
 
@@ -91,9 +130,10 @@ function renderTopic(topic) {
   let header4 = document.createElement('h6')
 
   if (topic.author === null) {
-    header4.innerHTML = ''
+    header4.innerHTML = `<hr class="my-${topicId}"><br>`
   } else {
-    header4.innerHTML = `<strong>Author:</strong> ${topic.author}`
+    header4.innerHTML = `<strong>Author:</strong> ${topic.author}
+    <hr class="my-${topicId}"><br>`
   }
 
   let image = document.createElement('img')
@@ -145,6 +185,15 @@ function renderTopic(topic) {
 
     newsDiv.appendChild(likeButton)
     newsDiv.appendChild(removeButton)
+
+    if (topic.author === null) {
+    header4.innerHTML = `<hr class="my-${topicId}"><br>`
+  } else {
+    header4.innerHTML = `<strong>Author:</strong> ${topic.author}
+    <hr class="my-${topicId}"><br>`
+  }
+  newsDiv.appendChild(header4)
+
   }
 }
 
