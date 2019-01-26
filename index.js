@@ -47,6 +47,26 @@ function showCategories() {
   musicBtn.innerText = "Music 🎶"
   div.appendChild(musicBtn)
 
+  let fitnessBtn = document.createElement('button')
+  fitnessBtn.classList.add('btn-info')
+  fitnessBtn.innerText = "Fitness 🏋🏾‍♀️"
+  div.appendChild(fitnessBtn)
+
+  let weWorkBtn = document.createElement('button')
+  weWorkBtn.classList.add('btn-info')
+  weWorkBtn.innerText = "WeWork"
+  div.appendChild(weWorkBtn)
+
+  let travelBtn = document.createElement('button')
+  travelBtn.classList.add('btn-info')
+  travelBtn.innerText = "Travel ✈️"
+  div.appendChild(travelBtn)
+
+  let technologyBtn = document.createElement('button')
+  technologyBtn.classList.add('btn-info')
+  technologyBtn.innerText = "Technology 🖥"
+  div.appendChild(technologyBtn)
+
   let grabCategoryButtons = document.querySelectorAll('.btn-info')
   for (var i = 0; i < grabCategoryButtons.length; i++) {
     grabCategoryButtons[i].addEventListener('click', (e) => {
