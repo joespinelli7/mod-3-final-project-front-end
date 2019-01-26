@@ -18,6 +18,7 @@ function showCategories() {
 
   let sportsBtn = document.createElement('button')
   sportsBtn.classList.add('margin-btn')
+  sportsBtn.classList.add('btn-info')
   sportsBtn.innerText = "Sports 🏈"
   div.appendChild(sportsBtn)
   sportsBtn.addEventListener('click', () => {
@@ -26,7 +27,6 @@ function showCategories() {
     .then(data => {
       let newsContainer = document.querySelector('#news-container').innerHTML = ""
       data.articles.forEach( (topic) => {
-        // debugger
       renderCategoryTopics(topic)
       })
     })
@@ -34,29 +34,74 @@ function showCategories() {
 
   let entertainmentBtn = document.createElement('button')
   entertainmentBtn.classList.add('margin-btn')
+  entertainmentBtn.classList.add('btn-info')
   entertainmentBtn.innerText = "Entertainment 🎥"
   div.appendChild(entertainmentBtn)
+  entertainmentBtn.addEventListener('click', () => {
+    fetch(`https://newsapi.org/v2/everything?q=entertainment&apiKey=${APIKEY}`)
+    .then(res => res.json())
+    .then(data => {
+      let newsContainer = document.querySelector('#news-container').innerHTML = ""
+      data.articles.forEach( (topic) => {
+      renderCategoryTopics(topic)
+      })
+    })
+  })
 
   let politicsBtn = document.createElement('button')
   politicsBtn.classList.add('margin-btn')
+  politicsBtn.classList.add('btn-info')
   politicsBtn.innerText = "Politics 🎺"
   div.appendChild(politicsBtn)
+  politicsBtn.addEventListener('click', () => {
+    fetch(`https://newsapi.org/v2/everything?q=politics&apiKey=${APIKEY}`)
+    .then(res => res.json())
+    .then(data => {
+      let newsContainer = document.querySelector('#news-container').innerHTML = ""
+      data.articles.forEach( (topic) => {
+      renderCategoryTopics(topic)
+      })
+    })
+  })
+
 
   let worldBtn = document.createElement('button')
   worldBtn.classList.add('margin-btn')
+  worldBtn.classList.add('btn-info')
   worldBtn.innerText = "World 🌎"
   div.appendChild(worldBtn)
+  worldBtn.addEventListener('click', () => {
+    fetch(`https://newsapi.org/v2/everything?q=world&apiKey=${APIKEY}`)
+    .then(res => res.json())
+    .then(data => {
+      let newsContainer = document.querySelector('#news-container').innerHTML = ""
+      data.articles.forEach( (topic) => {
+      renderCategoryTopics(topic)
+      })
+    })
+  })
+
 
   let businessBtn = document.createElement('button')
   businessBtn.classList.add('margin-btn')
+  businessBtn.classList.add('btn-info')
   businessBtn.innerText = "Business 💸"
   div.appendChild(businessBtn)
+  businessBtn.addEventListener('click', () => {
+    fetch(`https://newsapi.org/v2/everything?q=business&apiKey=${APIKEY}`)
+    .then(res => res.json())
+    .then(data => {
+      let newsContainer = document.querySelector('#news-container').innerHTML = ""
+      data.articles.forEach( (topic) => {
+      renderCategoryTopics(topic)
+      })
+    })
+  })
 }
 
 
 function renderCategoryTopics(topic) {
-  // debugger
-  // const newsContainer = document.querySelector('#news-container').innerHTML = ""
+
   let newsContainerNew = document.querySelector('#news-container')
 
   let navBar = document.querySelector('nav')
@@ -139,7 +184,14 @@ function renderCategoryTopics(topic) {
 
     let logoutButton = document.getElementById('input-btn')
     logoutButton.innerText = "Logout"
-    logoutButton.addEventListener('click', document.addEventListener('DOMContentLoaded', init))
+    logoutButton.addEventListener('click', () => {
+
+      if(logoutButton.innerText === "Login"){
+        debugger
+      }
+    }
+    // document.addEventListener('DOMContentLoaded', init)
+  )
 
     newsDiv.appendChild(likeButton)
     newsDiv.appendChild(removeButton)
@@ -153,7 +205,7 @@ function renderCategoryTopics(topic) {
 
     newsDiv.appendChild(header4)
 
-  
+
   }
 }
 
@@ -172,12 +224,12 @@ function loginForm(){
   btn.id = `input-btn`
   btn.innerText = "Login"
   btn.addEventListener('click', (e) => {
+    if(btn.innerText === "Login"){
     e.preventDefault()
     fetch('http://localhost:3000/users')
     .then(res => res.json())
     .then(users => {users.forEach( (user) =>
-      {
-        if (user.email === document.querySelector('#input-id').value){
+      {if (user.email === document.querySelector('#input-id').value){
           document.querySelector('#news-container').innerHTML = ""
           navbar.id = user.id
           getAllTopics()
@@ -187,6 +239,10 @@ function loginForm(){
 
     )
   })
+}       //closes out if statement on line 181
+  else{
+    init()
+  }
   })
 
   const navbar = document.querySelector('nav')
@@ -224,7 +280,6 @@ function renderTopic(topic) {
   header2.innerText = topic.description
 
   let header3 = document.createElement('h5')
-  // header3.innerText = topic.url
 
   let aTag = document.createElement('a')
   let newWindow = document.createAttribute("target")
@@ -304,17 +359,6 @@ function renderTopic(topic) {
   }
 }
 
-function logout(){
-  let logoutButton = document.getElementById('input-btn')
-  logoutButton.addEventListener('click', () => {
-    logoutButton.innerText = "Login"
-  })
-}
-
-
-// topic1 = Topic.create!(author: , title: , description: , published_at: ,
-//   source_id: , source_name: , url: , urlToImage: , user_id: )
-
 function saveArticle(e){
   const author = e.target.parentNode.childNodes[3].innerText
   // debugger
@@ -383,12 +427,15 @@ function showFavorites(){
 }
 
 function renderFavorites(topic){
-  const newsContainer = document.querySelector('#news-container')
+  let newsContainer = document.querySelector('#news-container')
+
 
   let navBar = document.querySelector('nav')
 
   let newsDiv = document.createElement('div')
   newsDiv.classList.add(`row-${++topicId}`)
+  newsDiv.classList.add(`col-sm`)
+
 
   let header1 = document.createElement('h3')
   header1.innerHTML = `<strong>Title:</strong> ${topic.title}`
@@ -428,18 +475,16 @@ function renderFavorites(topic){
 
 
     grabUserName()
-    // document.querySelector('#input-id').reset()
-    document.querySelector('#input-btn').innerText = "Logout"
     navBar.appendChild(welcomeMessage)
     }
 
 
-  newsDiv.appendChild(header1)
-  newsDiv.appendChild(image)
-  newsDiv.appendChild(header2)
-  newsDiv.appendChild(header3)
-  newsDiv.appendChild(header4)
-  newsContainer.appendChild(newsDiv)
+    newsContainer.prepend(newsDiv)
+    newsDiv.prepend(header4)
+  newsDiv.prepend(header3)
+  newsDiv.prepend(header2)
+  newsDiv.prepend(image)
+  newsDiv.prepend(header1)
 
   if (navBar.id !== "hi"){
 
