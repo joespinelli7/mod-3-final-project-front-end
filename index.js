@@ -4,8 +4,9 @@ const btn = document.createElement('button')
 btn.innerText = "Login"
 function init(){
   getAllTopics()
+
   loginForm()
-  // logout()
+
   showCategories()
 
 
@@ -14,89 +15,52 @@ function init(){
 }
 
 function showCategories() {
-  let div = document.querySelector('#mydiv')
+  let div = document.querySelector('#myDiv')
 
   let sportsBtn = document.createElement('button')
-  sportsBtn.classList.add('margin-btn')
   sportsBtn.classList.add('btn-info')
   sportsBtn.innerText = "Sports 🏈"
   div.appendChild(sportsBtn)
-  sportsBtn.addEventListener('click', () => {
-    fetch(`https://newsapi.org/v2/everything?q=sports&apiKey=${APIKEY}`)
-    .then(res => res.json())
-    .then(data => {
-      let newsContainer = document.querySelector('#news-container').innerHTML = ""
-      data.articles.forEach( (topic) => {
-      renderCategoryTopics(topic)
-      })
-    })
-  })
 
   let entertainmentBtn = document.createElement('button')
-  entertainmentBtn.classList.add('margin-btn')
   entertainmentBtn.classList.add('btn-info')
   entertainmentBtn.innerText = "Entertainment 🎥"
   div.appendChild(entertainmentBtn)
-  entertainmentBtn.addEventListener('click', () => {
-    fetch(`https://newsapi.org/v2/everything?q=entertainment&apiKey=${APIKEY}`)
-    .then(res => res.json())
-    .then(data => {
-      let newsContainer = document.querySelector('#news-container').innerHTML = ""
-      data.articles.forEach( (topic) => {
-      renderCategoryTopics(topic)
-      })
-    })
-  })
 
   let politicsBtn = document.createElement('button')
-  politicsBtn.classList.add('margin-btn')
   politicsBtn.classList.add('btn-info')
   politicsBtn.innerText = "Politics 🎺"
   div.appendChild(politicsBtn)
-  politicsBtn.addEventListener('click', () => {
-    fetch(`https://newsapi.org/v2/everything?q=politics&apiKey=${APIKEY}`)
-    .then(res => res.json())
-    .then(data => {
-      let newsContainer = document.querySelector('#news-container').innerHTML = ""
-      data.articles.forEach( (topic) => {
-      renderCategoryTopics(topic)
-      })
-    })
-  })
-
 
   let worldBtn = document.createElement('button')
-  worldBtn.classList.add('margin-btn')
   worldBtn.classList.add('btn-info')
   worldBtn.innerText = "World 🌎"
   div.appendChild(worldBtn)
-  worldBtn.addEventListener('click', () => {
-    fetch(`https://newsapi.org/v2/everything?q=world&apiKey=${APIKEY}`)
-    .then(res => res.json())
-    .then(data => {
-      let newsContainer = document.querySelector('#news-container').innerHTML = ""
-      data.articles.forEach( (topic) => {
-      renderCategoryTopics(topic)
-      })
-    })
-  })
-
 
   let businessBtn = document.createElement('button')
-  businessBtn.classList.add('margin-btn')
   businessBtn.classList.add('btn-info')
   businessBtn.innerText = "Business 💸"
   div.appendChild(businessBtn)
-  businessBtn.addEventListener('click', () => {
-    fetch(`https://newsapi.org/v2/everything?q=business&apiKey=${APIKEY}`)
-    .then(res => res.json())
-    .then(data => {
-      let newsContainer = document.querySelector('#news-container').innerHTML = ""
-      data.articles.forEach( (topic) => {
-      renderCategoryTopics(topic)
+
+  let musicBtn = document.createElement('button')
+  musicBtn.classList.add('btn-info')
+  musicBtn.innerText = "Music 🎶"
+  div.appendChild(musicBtn)
+
+  let grabCategoryButtons = document.querySelectorAll('.btn-info')
+  for (var i = 0; i < grabCategoryButtons.length; i++) {
+    grabCategoryButtons[i].addEventListener('click', (e) => {
+      let query = e.target.innerText.split(' ')[0].toLowerCase()
+      fetch(`https://newsapi.org/v2/everything?q=${query}&apiKey=${APIKEY}`)
+      .then(res => res.json())
+      .then(data => {
+        let newsContainer = document.querySelector('#news-container').innerHTML = ""
+        data.articles.forEach( (topic) => {
+        renderCategoryTopics(topic)
+        })
       })
     })
-  })
+  }
 }
 
 
@@ -145,22 +109,6 @@ function renderCategoryTopics(topic) {
   }
 
   let br = document.createElement('br')
-
-  //welcomes user when they sign in
-  //add box or highlight to it
-
-                                                                                      //POSSIBLY REMOVE
-  // if (navBar.id !== "0"){
-  //   let welcomeMessage = document.createElement('h1')
-  //   welcomeMessage.id = "welcome"
-  //
-  //
-  //   grabUserName()
-  //   // document.querySelector('#input-id').reset()
-  //   // document.querySelector('#input-btn').innerText = "Login"
-  //   navBar.appendChild(welcomeMessage)
-  //   }
-
 
   newsDiv.appendChild(header1)
   newsDiv.appendChild(image)
@@ -361,7 +309,6 @@ function renderTopic(topic) {
 
 function saveArticle(e){
   const author = e.target.parentNode.childNodes[3].innerText
-  // debugger
   const title = e.target.parentNode.childNodes[0].innerText
   const description = e.target.parentNode.childNodes[2].innerText
   const urlToImage = e.target.parentNode.childNodes[1].src
@@ -398,8 +345,8 @@ function grabUserName(){
   .then(users => {users.forEach((user) => {
     if(parseInt(document.querySelector('nav').id) === user.id){
       document.querySelector('#welcome').innerText = `Welcome ${user.name}`}
-}
-)
+      }
+    )
 })}
 // Need to figure this myFavorites function out, not exactly working
 function myFavorites(){
@@ -429,13 +376,11 @@ function showFavorites(){
 function renderFavorites(topic){
   let newsContainer = document.querySelector('#news-container')
 
-
   let navBar = document.querySelector('nav')
 
   let newsDiv = document.createElement('div')
   newsDiv.classList.add(`row-${++topicId}`)
   newsDiv.classList.add(`col-sm`)
-
 
   let header1 = document.createElement('h3')
   header1.innerHTML = `<strong>Title:</strong> ${topic.title}`
@@ -478,7 +423,6 @@ function renderFavorites(topic){
     navBar.appendChild(welcomeMessage)
     }
 
-
     newsContainer.prepend(newsDiv)
     newsDiv.prepend(header4)
   newsDiv.prepend(header3)
@@ -499,7 +443,6 @@ function renderFavorites(topic){
 
 function removeFavNewsArticle(url,id){
   let navBarId = document.querySelector('nav').id
-
   fetch(`http://localhost:3000/users/${navBarId}/favorites/${id}`,{
     method: "DELETE"
   }).then(showFavorites)
@@ -507,13 +450,11 @@ function removeFavNewsArticle(url,id){
 
 function searchNews(e) {
   e.preventDefault()
-
   let searchTerm = document.querySelector('#new-search').value
   if(searchTerm === ""){
     alert("Search for something!")
   }
   else{
-
   fetch(`https://newsapi.org/v2/everything?q=${searchTerm}&language=en&apiKey=${APIKEY}`)
   .then(res => res.json())
   .then(data => {
