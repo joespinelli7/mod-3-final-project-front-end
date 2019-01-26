@@ -148,17 +148,6 @@ function renderCategoryTopics(topic) {
     removeButton.innerText = "Remove 👎"
     removeButton.addEventListener('click', removeMainNewsArticle)
 
-    //LOGOUT!!!!
-
-    let logoutButton = document.getElementById('input-btn')
-    logoutButton.innerText = "Logout"
-    logoutButton.addEventListener('click', () => {
-
-      if(logoutButton.innerText === "Login"){
-        debugger
-      }
-    }
-  )
 
     newsDiv.appendChild(likeButton)
     newsDiv.appendChild(removeButton)
@@ -172,12 +161,8 @@ function renderCategoryTopics(topic) {
 
     newsDiv.appendChild(header4)
 
-
   }
 }
-
-
-
 
 function loginForm(){
   let jumbo = document.createElement('div')
