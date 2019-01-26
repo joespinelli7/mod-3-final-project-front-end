@@ -158,7 +158,6 @@ function renderCategoryTopics(topic) {
         debugger
       }
     }
-    // document.addEventListener('DOMContentLoaded', init)
   )
 
     newsDiv.appendChild(likeButton)
@@ -182,7 +181,6 @@ function renderCategoryTopics(topic) {
 
 function loginForm(){
   let jumbo = document.createElement('div')
-  jumbo.classList.add('jumbotron')
 
   let form = document.createElement('form')
   let input1 = document.createElement('input')
