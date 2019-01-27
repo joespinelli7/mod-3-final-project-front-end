@@ -9,7 +9,6 @@ function init(){
 
   showCategories()
 
-
   let searchForm = document.querySelector('#new-search-form')
   searchForm.addEventListener('submit', searchNews)
 }
@@ -171,6 +170,7 @@ function loginForm(){
   let input1 = document.createElement('input')
   input1.id = "input-id"
   input1.placeholder = "E-mail"
+
   let btn = document.createElement('button')
   btn.id = `input-btn`
   btn.innerText = "Login"
@@ -184,10 +184,10 @@ function loginForm(){
           document.querySelector('#news-container').innerHTML = ""
           navbar.id = user.id
           getAllTopics()
-          myFavorites()
+
+          myFavorites(navbar)
         }
       }
-
     )
   })
 }       //closes out if statement on line 181
@@ -201,7 +201,6 @@ function loginForm(){
   form.appendChild(btn)
   jumbo.appendChild(form)
   navbar.appendChild(jumbo)
-
 }
 
 
@@ -235,9 +234,11 @@ function renderTopic(topic) {
   let aTag = document.createElement('a')
   let newWindow = document.createAttribute("target")
   newWindow.value = "_blank"
+
   aTag.href = `${topic.url}`
   aTag.innerText = "Link to article here!"
   aTag.setAttributeNode(newWindow)
+
   header3.appendChild(aTag)
 
   let header4 = document.createElement('h6')
@@ -299,12 +300,6 @@ function renderTopic(topic) {
     newsDiv.appendChild(likeButton)
     newsDiv.appendChild(removeButton)
 
-    if (topic.author === null) {
-    header4.innerHTML = `<hr class="my-${topicId}"><br>`
-  } else {
-    header4.innerHTML = `<strong>Author:</strong> ${topic.author}
-    <hr class="my-${topicId}"><br>`
-  }
   newsDiv.appendChild(header4)
 
   }
@@ -352,21 +347,21 @@ function grabUserName(){
     )
 })}
 // Need to figure this myFavorites function out, not exactly working
-function myFavorites(){
-  let navBar = document.querySelector('nav')
-  if (navBar.id !== "hi"){
-
-    if(!navBar.myFavorites){
+function myFavorites(navbar){
+  if (navbar.id !== "hi"){
+    if(!navbar.myFavorites){
     let myFavorites = document.createElement('button')
     myFavorites.innerText = "My Favorites"
-    myFavorites.addEventListener('click', showFavorites)
-    navBar.appendChild(myFavorites)}
+    myFavorites.addEventListener('click', () => {showFavorites(navbar)
+    })
+    navbar.appendChild(myFavorites)}
   }
 }
 
 function showFavorites(){
   document.getElementById('news-container').innerHTML = ""
   let navBarId = document.querySelector('nav').id
+  
   fetch(`http://localhost:3000/users/${navBarId}/favorites`)
   .then(res => res.json())
   .then(data =>
