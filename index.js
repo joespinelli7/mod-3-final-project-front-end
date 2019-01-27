@@ -358,20 +358,20 @@ function myFavorites(navbar){
   }
 }
 
-function showFavorites(){
+function showFavorites(navbar){
   document.getElementById('news-container').innerHTML = ""
   let navBarId = document.querySelector('nav').id
-  
+
   fetch(`http://localhost:3000/users/${navBarId}/favorites`)
   .then(res => res.json())
   .then(data =>
     {data.forEach( (topic) => {
-    renderFavorites(topic)
+    renderFavorites(topic, navbar)
   })
 })
 }
 
-function renderFavorites(topic){
+function renderFavorites(topic, navbar){
   let newsContainer = document.querySelector('#news-container')
 
   let navBar = document.querySelector('nav')
@@ -433,14 +433,13 @@ function renderFavorites(topic){
     let removeButton = document.createElement('button')
     removeButton.classList.add('remove-button')
     removeButton.innerText = "Destroy 🧨"
-    removeButton.addEventListener('click', ()=> {removeFavNewsArticle(topic.url, topic.id)})
+    removeButton.addEventListener('click', ()=> {removeFavNewsArticle(navbar.id, topic.id)})
 
     newsDiv.appendChild(removeButton)
   }
 }
 
-function removeFavNewsArticle(url,id){
-  let navBarId = document.querySelector('nav').id
+function removeFavNewsArticle(navBarId,id){
   fetch(`http://localhost:3000/users/${navBarId}/favorites/${id}`,{
     method: "DELETE"
   }).then(showFavorites)
