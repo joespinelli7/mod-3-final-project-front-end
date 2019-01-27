@@ -190,9 +190,10 @@ function loginForm(){
       }
     )
   })
-}       //closes out if statement on line 181
+}
   else{
     init()
+
   }
   })
 
@@ -259,19 +260,13 @@ function renderTopic(topic) {
     image.alt = "No Image Available"
   }
 
-  let br = document.createElement('br')
-
-  //welcomes user when they sign in
-  //add box or highlight to it
   if (navBar.id !== "0"){
     let welcomeMessage = document.createElement('h1')
     welcomeMessage.id = "welcome"
-
-
     grabUserName()
-    // document.querySelector('#input-id').reset()
     document.querySelector('#input-btn').innerText = "Login"
     navBar.appendChild(welcomeMessage)
+
     }
 
 
@@ -295,14 +290,14 @@ function renderTopic(topic) {
     removeButton.addEventListener('click', removeMainNewsArticle)
 
     let logoutButton = document.getElementById('input-btn')
-  logoutButton.innerText = "Logout"
+    logoutButton.innerText = "Logout"
 
     newsDiv.appendChild(likeButton)
     newsDiv.appendChild(removeButton)
 
   newsDiv.appendChild(header4)
-
   }
+
 }
 
 function saveArticle(e){
