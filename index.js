@@ -175,25 +175,25 @@ function loginForm(){
   btn.id = `input-btn`
   btn.innerText = "Login"
   btn.addEventListener('click', (e) => {
+    let email = document.querySelector('#input-id').value
     if(btn.innerText === "Login"){
     e.preventDefault()
     fetch('http://localhost:3000/users')
     .then(res => res.json())
     .then(users => {users.forEach( (user) =>
-      {if (user.email === document.querySelector('#input-id').value){
+      {if (user.email === email){
           document.querySelector('#news-container').innerHTML = ""
           navbar.id = user.id
           getAllTopics()
-
           myFavorites(navbar)
         }
       }
     )
   })
+document.querySelector('#input-id').remove()
 }
   else{
     init()
-
   }
   })
 
